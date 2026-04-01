@@ -1,8 +1,19 @@
 /* Copyright (c) 2020 MTHS All rights reserved
  *
- * Created by: XXX
- * Created on: Sep 2020
- * This program ...
+ * Created by: Jet Lu
+ * Created on: Apr 2026
+ * This program can drive a car and avoid collision.
 */
 
-basic.showString('Hello, World!')
+// setup
+basic.showIcon(IconNames.Happy)
+robotbit.StpCarMove(0, 48)
+
+// loop
+while (true) {
+  if (input.buttonIsPressed(button.A) == true) {
+    robotbit.StpCarMove(20, 48)
+    
+
+
+  }
