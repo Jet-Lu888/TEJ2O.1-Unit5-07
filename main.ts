@@ -1,41 +1,43 @@
-/* Copyright (c) 2020 MTHS All rights reserved
- *
- * Created by: Jet Lu
- * Created on: Apr 2026
- * This program can drive a car and avoid collision.
+/* Copyright (c) 2026 MTHS All rights reserved
+* Created by: Jet Lu
+* Created on: Mar 2026
+* This program moves a motor back and forth
 */
 
-// variable
-let numDist: number = 0
-
 // setup
+basic.clearScreen()
 basic.showIcon(IconNames.Happy)
 robotbit.StpCarMove(0, 48)
 
-// loop forever
-while (true) {
-  // find distance
-  numDist = sonar.ping(
-    DigitalPin.P1, // trigger
-    DigitalPin.P2, // echo
-    PingUnit.Centimeters
-  )
+// a button
+input.onButtonPressed(Button.A, function () {
+  basic.clearScreen()
+  basic.showIcon(IconNames.Yes)
 
-  // moving car
-  if (input.buttonIsPressed(Button.A) == true) {
-    robotbit.StpCarMove(20, 48)
-    basic.showString("moving")
-    basic.showIcon(IconNames.Yes)
-  
-  // avoid collision
-    if (numDist < 10) {
-      robotbit.StpCarMove(0, 48)
-      basic.showIcon(IconNames.Triangle)
-      pause(500)
-      robotbit.StpCarMove(-10, 48)
-      robotbit.StepperTurn(robotbit.Steppers.M1, robotbit.Turns.T1B0) // turns 1 motor 180 degrees
-      pause(500)
-      robotbit.StpCarMove(20, 48)
+  // forever loop
+  while (true) {
+
+    // obtain distance using the sonar
+    let distance = sonar.ping(
+      DigitalPin.P1, // trigger
+      DigitalPin.P2, // echo
+      PingUnit.Centimeters,
+    )
+
+    // if distance is below 10
+    if (distance > 0 && distance <= 10) {
+      basic.clearScreen()
+      basic.showString(distance.toString() + ' cm')
+      basic.showIcon(IconNames.Yes)
+      robotbit.StpCarMove(0, 48) // stop the car
+      basic.pause(1000)
+      robotbit.StpCarMove(-10, 48) // reverse 10 cm
+      basic.pause(1000)
+      robotbit.StepperTurn(robotbit.Steppers.M1, robotbit.Turns.T1B4) // turn 90 degrees
+    
+    // if not
+    } else {
+      robotbit.StpCarMove(1, 48)
     }
   }
-}
+})
