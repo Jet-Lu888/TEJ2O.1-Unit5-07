@@ -34,8 +34,6 @@ input.onButtonPressed(Button.A, function () {
       robotbit.StpCarMove(-10, 48) // reverse 10 cm
       basic.pause(1000)
       robotbit.StepperTurn(robotbit.Steppers.M1, robotbit.Turns.T1B4) // turn 90 degrees
-    
-    // if not
     } else {
       robotbit.StpCarMove(1, 48)
     }
